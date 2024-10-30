@@ -62,4 +62,4 @@
         <!-- JS Libraies -->
 
         <!-- Page Specific JS File -->
-    @endpush
+@endpush
