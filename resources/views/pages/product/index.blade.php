@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Products')
+@section('title', 'Product')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -16,9 +16,9 @@
                     <a href="{{ route('product.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="{{ url('home') }}">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Products</a></div>
-                    <div class="breadcrumb-item">All Products</div>
+                    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                    <div class="breadcrumb-item"><a href="#">Product</a></div>
+                    <div class="breadcrumb-item">All Product</div>
                 </div>
             </div>
             <div class="section-body">
@@ -27,7 +27,6 @@
                         @include('layouts.alert')
                     </div>
                 </div>
-
                 <div class="row mt-4">
                     <div class="col-12">
                         <div class="card">
@@ -54,6 +53,7 @@
                                             <th>Name</th>
                                             <th>Category</th>
                                             <th>Price</th>
+                                            <th>Stock</th>
                                             <th>Photo</th>
                                             <th>Created At</th>
                                             <th>Action</th>
@@ -61,45 +61,43 @@
                                         @foreach ($products as $product)
                                             <tr>
 
-                                                <td>{{ $product->name }}
+                                             <td>{{ $product->name }}
                                                 </td>
-                                                <td>
-                                                    {{ $product->category }}
+                                                <td>{{ $product->category }}
                                                 </td>
-
-                                                {{-- {{ $product->price }} --}}
-                                                <td> {{ sprintf('Rp. %s', number_format($product->price)) }}
+                                                <td>   {{ sprintf('Rp. %s', number_format($product->price)) }}
                                                 </td>
-
+                                                <td>{{ $product->stock }}
+                                                </td>
                                                 <td>
                                                     @if ($product->image)
-                                                        <img src="{{ asset('storage/products/' . $product->image) }}"
-                                                            alt="" width="100px" class="img-thumbnail">
-                                                    @else
+                                                    <img src="{{ asset('storage/products/'.$product->image) }}" alt=""
+                                                        width="100px" class="img-thumbnail">
+                                                        @else
                                                         <span class="badge badge-danger">No Image</span>
-                                                    @endif
+
+                                                @endif
 
                                                 </td>
+
                                                 <td>{{ $product->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        @if (auth()->user()->roles != 'USER')
-                                                            <a href='{{ route('product.edit', $product->id) }}'
-                                                                class="btn btn-sm btn-info btn-icon">
-                                                                <i class="fas fa-edit"></i> Edit
-                                                            </a>
-                                                        @endif
-                                                        @if (auth()->user()->roles == 'STAF' || auth()->user()->roles == 'ADMIN')
-                                                            <form action="{{ route('product.destroy', $product->id) }}"
-                                                                method="POST" class="ml-2">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <button
-                                                                    class="btn btn-sm btn-danger btn-icon konfirmasi-hapus">
-                                                                    <i class="fas fa-times"></i> Hapus
-                                                                </button>
-                                                            </form>
-                                                        @endif
+                                                        <a href='{{ route('product.edit', $product->id) }}'
+                                                            class="btn btn-sm btn-info btn-icon">
+                                                            <i class="fas fa-edit"></i>
+                                                            Edit
+                                                        </a>
+
+                                                        <form action="{{ route('product.destroy', $product->id) }}"
+                                                            method="POST" class="ml-2">
+                                                            <input type="hidden" name="_method" value="DELETE" />
+                                                            <input type="hidden" name="_token"
+                                                                value="{{ csrf_token() }}" />
+                                                            <button class="btn btn-sm btn-danger btn-icon confirm-delete">
+                                                                <i class="fas fa-times"></i> Delete
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -110,7 +108,6 @@
                                 </div>
                                 <div class="float-right">
                                     {{ $products->withQueryString()->links() }}
-
                                 </div>
                             </div>
                         </div>

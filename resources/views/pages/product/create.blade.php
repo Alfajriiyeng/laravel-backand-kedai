@@ -62,7 +62,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label>Stock</label>
+                                <label>stock</label>
                                 <input type="number"
                                     class="form-control @error('stock')
                                 is-invalid

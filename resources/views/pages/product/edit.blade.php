@@ -52,8 +52,8 @@
 
                             <div class="form-group">
                                 <label>Stock</label>
-                                <input type="number" class="form-control @error('stok') is-invalid @enderror" name="stok" value="{{ old('stok', $product->stok) }}">
-                                @error('stok')
+                                <input type="number" class="form-control @error('stock') is-invalid @enderror" name="stock" value="{{ old('stock', $product->stock) }}">
+                                @error('stock')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -66,11 +66,11 @@
                                         <span class="selectgroup-button">Food</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="drink" class="selectgroup-input" {{ old('category', $product->category) == 'drink' ? 'checked' : '' }}>
+                                        <input type="radio" name="category" value="drinks" class="selectgroup-input" {{ old('category', $product->category) == 'drinks' ? 'checked' : '' }}>
                                         <span class="selectgroup-button">Drink</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="snack" class="selectgroup-input" {{ old('category', $product->category) == 'snack' ? 'checked' : '' }}>
+                                        <input type="radio" name="category" value="snacks" class="selectgroup-input" {{ old('category', $product->category) == 'snacks' ? 'checked' : '' }}>
                                         <span class="selectgroup-button">Snack</span>
                                     </label>
                                 </div>
